@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
 import Header from './components/Header';
 import Wrapper from './components/Wrapper';
 import NowWhat from './components/NowWhat';
@@ -20,7 +21,16 @@ const theme = createMuiTheme({
     },
     background: {
       default: 'rgb(226,231,238)',
-    },
+    }
+  },
+  overrides: {
+    MuiInput: {
+      underline: {
+        "&:before": {
+          borderBottom: `1px solid #ffffff`
+        }
+      }
+    }
   },
 });
 
