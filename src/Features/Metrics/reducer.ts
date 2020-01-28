@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from 'redux-starter-kit';
 
 export type MetricsForDropdown = {
     metricsList: Array<{ value: number, label: string }>;
-    metricsSelected: Array<string>;
+    selectedMetrics: Array<string>;
 };
 
 export type ApiErrorAction = {
@@ -11,7 +11,7 @@ export type ApiErrorAction = {
 
 const initialState = {
     metricsList: [],
-    metricsSelected: []
+    selectedMetrics: []
 };
 
 const slice = createSlice({
@@ -25,7 +25,7 @@ const slice = createSlice({
         metricsApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
         setMetricsSelected: (state, action: PayloadAction<MetricsForDropdown>) => {
             // @ts-ignore
-            state.metricsSelected = action.payload;
+            state.selectedMetrics = action.payload;
         }
     },
 });

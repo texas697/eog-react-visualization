@@ -9,7 +9,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import {query, client, useStyles, MenuProps, getStyles, formatString} from './config'
+import {query, client, useStyles, MenuProps} from './config'
+import * as utils from './utils'
 import {getMetricsList, getSelectedMetrics} from './selectors'
 
 export default () => {
@@ -24,8 +25,8 @@ const Metrics = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const theme = useTheme();
-  const { metricsList } = useSelector(getMetricsList);
-  const { metricsSelected } = useSelector(getSelectedMetrics);
+  const metricsList = useSelector(getMetricsList);
+  const selectedMetrics = useSelector(getSelectedMetrics);
 
   const [result] = useQuery({query});
 
@@ -41,7 +42,7 @@ const Metrics = () => {
     const _data = getMetrics.map(x => {
       return {
         value: x,
-        label: formatString(x)
+        label: utils.formatString(x)
       }
     });
     dispatch(actions.metricsDataRecevied(_data));
@@ -55,23 +56,23 @@ const Metrics = () => {
   if (fetching) return <LinearProgress />;
 
   return (
-      <FormControl className={classes.formControl}>
-          <InputLabel id="metric-select">Select Metric</InputLabel>
-          <Select
-              labelId="metric-select"
-              id="metric-select"
-              multiple
-              value={metricsSelected}
-              onChange={handleChange}
-              input={<Input />}
-              MenuProps={MenuProps}
-          >
-              {metricsList.map((x: {value: string, label: string}, i) => (
-                  <MenuItem key={i} value={x.value} style={getStyles(x.value, metricsSelected, theme)}>
-                      {x.label}
-                  </MenuItem>
-              ))}
-          </Select>
-      </FormControl>
+        <FormControl className={classes.formControl}>
+            <InputLabel id="metric-select">Select Metric</InputLabel>
+            <Select
+                labelId="metric-select"
+                id="metric-select"
+                multiple
+                value={selectedMetrics}
+                onChange={handleChange}
+                input={<Input />}
+                MenuProps={MenuProps}
+            >
+                {metricsList.map((x: {value: string, label: string}, i) => (
+                    <MenuItem key={i} value={x.value} style={utils.getStyles(x.value, selectedMetrics, theme)}>
+                        {x.label}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
   );
 };

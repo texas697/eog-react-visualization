@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from './Avatar';
+import ChartsContainer from '../Features/Chart/chart'
 
 const useStyles = makeStyles({
   card: {
@@ -18,36 +19,9 @@ const useStyles = makeStyles({
 export default () => {
   const classes = useStyles();
   return (
-    <Card className={classes.card}>
-      <CardHeader title="OK, RodolfoSanchez, you're all setup. Now What?" />
+    <Card>
       <CardContent>
-        <List>
-          <ListItem>
-            <Avatar>1</Avatar>
-            <ListItemText primary="Explore the GraphQL API" />
-          </ListItem>
-          <ListItem>
-            <Avatar>2</Avatar>
-            <ListItemText primary="Add ability to select Metrics" />
-          </ListItem>
-          <ListItem>
-            <Avatar>3</Avatar>
-            <ListItemText primary="Display the current metric data" />
-          </ListItem>
-          <ListItem>
-            <Avatar>4</Avatar>
-            <ListItemText primary="Chart historical metric data" />
-          </ListItem>
-          <ListItem>
-            <Avatar>5</Avatar>
-            <ListItemText primary="Submit Your App" />
-          </ListItem>
-        </List>
-
-        <Typography variant="body1">
-          Remember to refer to our <a href="https://react.eogresources.com/assessing">How We Assess Submissions</a>{' '}
-          guidelines, as well as the <a href="https://react.eogresources.com/api">GraphQL API Documentation</a>.
-        </Typography>
+        <ChartsContainer />
       </CardContent>
     </Card>
   );

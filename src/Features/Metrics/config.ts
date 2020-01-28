@@ -37,14 +37,3 @@ export const MenuProps = {
     },
   },
 };
-
-export function getStyles(x: string, selectedMetric: string[], theme: Theme) {
-  return {
-    fontWeight: selectedMetric.indexOf(x) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium
-  };
-}
-
-export function formatString(x: string) {
-    const result = x.replace( /([A-Z])/g, " $1" );
-    return result.charAt(0).toUpperCase() + result.slice(1);
-}
