@@ -1,5 +1,5 @@
 import React from 'react';
-import createStore from './store';
+import store from './store';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -8,9 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 import Header from './components/Header';
 import Wrapper from './components/Wrapper';
-import NowWhat from './components/NowWhat';
+import Layout from './components/Layout';
 
-const store = createStore();
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -40,7 +39,7 @@ const App = () => (
     <Provider store={store}>
       <Wrapper>
         <Header />
-        <NowWhat />
+        <Layout />
         <ToastContainer />
       </Wrapper>
     </Provider>

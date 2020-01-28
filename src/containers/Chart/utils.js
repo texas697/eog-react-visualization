@@ -1,13 +1,15 @@
 import {TimeSeries} from "pondjs"
+import {formatString} from '../Metrics/utils'
+import {styler} from 'react-timeseries-charts'
 
 export const buildSeriesData = data => {
   return data.reduce((accum, elem) => {
     const { metric, measurements } = elem;
-    const points = measurements.map(m => [m.at, m.value, m.unit]);
+    const points = measurements.map(m => [m.at, m.value, m.unit, m.metric]);
 
     const series = new TimeSeries({
-      name: metric,
-      columns: ["time", "value", "unit"],
+      name: formatString(metric),
+      columns: ["time", "value", "unit", "metric"],
       points
     });
 
@@ -50,6 +52,39 @@ export const buildTrafficSeriesData = (seriesData) => {
     name: "Metrics",
     seriesList: seriesData
   });
+}
+
+export const assignColor = metric => {
+  if (metric === "waterTemp") return "#000000";
+  else if (metric === "casingPressure") return "#c7000d";
+  else if (metric === "injValveOpen") return "#0013f7";
+  else if (metric === "flareTemp") return "#FFC300";
+  else if (metric === "oilTemp") return "#249000";
+  else if (metric === "tubingPressure") return "#f77800";
+}
+
+export const buildLegendCategories = series => {
+  const _columns = [];
+  series.forEach(x => {
+    const _metric = x.atLast().get("metric");
+    _columns.push({
+      key: _metric,
+      label: formatString(_metric)
+    });
+  });
+  return _columns;
+}
+
+export const buildLegendStyle = series => {
+  const _colors = [];
+  series.forEach(x => {
+    const _metric = x.atLast().get("metric");
+    _colors.push({
+      key: _metric,
+      color: assignColor(_metric)
+    });
+  });
+  return styler(_colors);
 }
 
 const calcThirtyMinutesAgo = () => new Date() - 30 * 60 * 1000;

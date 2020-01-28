@@ -17,3 +17,8 @@ export const getAxisData = state => {
 export const getTrafficSeriesData = state => {
     return state.measurements.trafficSeriesData
 };
+
+
+export const getWindowHeight = state => {
+    return state.measurements.windowHeight
+};

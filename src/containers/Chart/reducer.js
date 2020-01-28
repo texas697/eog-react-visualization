@@ -5,7 +5,8 @@ const initialState = {
   seriesData: [],
   axisData: [],
   trafficSeriesData: [],
-  error: ''
+  error: '',
+  windowHeight: 0
 };
 
 const slice = createSlice({
@@ -23,6 +24,9 @@ const slice = createSlice({
     },
     setTrafficSeriesData: (state, action) => {
       state.trafficSeriesData = action.payload;
+    },
+    setWindowHeight: (state, action) => {
+      state.windowHeight = action.payload;
     },
     measurementsApiErrorReceived: (state, action) => {
       state.error = action.payload;

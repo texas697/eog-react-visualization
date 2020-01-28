@@ -16,12 +16,12 @@ import {getMetricsList, getSelectedMetrics} from './selectors'
 export default () => {
   return (
     <Provider value={client}>
-      <Metrics />
+      <MetricsContainer />
     </Provider>
   );
 };
 
-const Metrics = () => {
+const MetricsContainer = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const theme = useTheme();
