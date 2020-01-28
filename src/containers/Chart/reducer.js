@@ -1,7 +1,6 @@
 import { createSlice } from 'redux-starter-kit';
 
 const initialState = {
-  measurementsData: [],
   seriesData: [],
   axisData: [],
   trafficSeriesData: [],
@@ -13,9 +12,6 @@ const slice = createSlice({
   name: 'measurements',
   initialState,
   reducers: {
-    receiveMeasurementData: (state, action) => {
-      state.measurementsData = action.payload;
-    },
     setSeriesData: (state, action) => {
       state.seriesData = action.payload;
     },

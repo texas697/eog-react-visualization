@@ -11,3 +11,9 @@ query($input: [MeasurementQuery]) {
   }
 }
 `;
+
+export const newMessages = `
+subscription {
+  newMeasurement {metric, at, value, unit}
+}
+`;

@@ -1,6 +1,8 @@
 import {TimeSeries} from "pondjs"
 import {formatString} from '../Metrics/utils'
 import {styler} from 'react-timeseries-charts'
+import {actions} from './reducer'
+import store from '../../store/index'
 
 export const buildSeriesData = data => {
   return data.reduce((accum, elem) => {
@@ -85,6 +87,18 @@ export const buildLegendStyle = series => {
     });
   });
   return styler(_colors);
+}
+
+export const buildData = (data, metrics) => {
+  let _seriesData = buildSeriesData(data.getMultipleMeasurements)
+  _seriesData = metrics.map(x => _seriesData[x])
+
+  const _axisData = buildAxisData(_seriesData)
+  const _trafficSeriesData = buildTrafficSeriesData(_seriesData)
+
+  store.dispatch(actions.setSeriesData(_seriesData))
+  store.dispatch(actions.setAxisData(_axisData))
+  store.dispatch(actions.setTrafficSeriesData(_trafficSeriesData))
 }
 
 const calcThirtyMinutesAgo = () => new Date() - 30 * 60 * 1000;

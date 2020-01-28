@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from './reducer';
-import { Provider, useQuery } from 'urql';
+import { useQuery } from 'urql';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Select from '@material-ui/core/Select';
 import { useTheme} from '@material-ui/core/styles';
@@ -9,17 +9,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import {query, client, useStyles, MenuProps} from './config'
+import {query, useStyles, MenuProps} from './config'
 import * as utils from './utils'
 import {getMetricsList, getSelectedMetrics} from './selectors'
 
-export default () => {
-  return (
-    <Provider value={client}>
-      <MetricsContainer />
-    </Provider>
-  );
-};
 
 const MetricsContainer = () => {
   const dispatch = useDispatch();
@@ -76,3 +69,5 @@ const MetricsContainer = () => {
         </FormControl>
   );
 };
+
+export default MetricsContainer;
