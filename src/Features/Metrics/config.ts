@@ -1,4 +1,11 @@
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
+import {createClient} from "urql";
+
+export const query = `query { getMetrics }`;
+
+export const client = createClient({
+    url: 'https://react.eogresources.com/graphql',
+});
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({

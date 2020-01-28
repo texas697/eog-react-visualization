@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from './reducer';
-import { Provider, createClient, useQuery } from 'urql';
+import { Provider, useQuery } from 'urql';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Select from '@material-ui/core/Select';
 import { useTheme} from '@material-ui/core/styles';
@@ -9,21 +9,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import { IState } from '../../store';
-import {useStyles, MenuProps, getStyles, formatString} from './config'
-
-const client = createClient({
-  url: 'https://react.eogresources.com/graphql',
-});
-
-const query = `query { getMetrics }`;
-
-const getMetricsList = (state: IState) => {
-  const { metricsList } = state.metrics;
-  return {
-    metricsList
-  };
-};
+import {query, client, useStyles, MenuProps, getStyles, formatString} from './config'
+import {getMetricsList, getSelectedMetrics} from './selectors'
 
 export default () => {
   return (
@@ -38,6 +25,7 @@ const Metrics = () => {
   const classes = useStyles();
   const theme = useTheme();
   const { metricsList } = useSelector(getMetricsList);
+  const { metricsSelected } = useSelector(getSelectedMetrics);
 
   const [result] = useQuery({query});
 
@@ -59,10 +47,9 @@ const Metrics = () => {
     dispatch(actions.metricsDataRecevied(_data));
   }, [dispatch, data, error]);
 
-    const [selectedMetric, setMetricName] = React.useState<string[]>([]);
-
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setMetricName(event.target.value as string[]);
+      // @ts-ignore
+      dispatch(actions.setMetricsSelected(event.target.value as string[]));
     };
 
   if (fetching) return <LinearProgress />;
@@ -74,13 +61,13 @@ const Metrics = () => {
               labelId="metric-select"
               id="metric-select"
               multiple
-              value={selectedMetric}
+              value={metricsSelected}
               onChange={handleChange}
               input={<Input />}
               MenuProps={MenuProps}
           >
               {metricsList.map((x: {value: string, label: string}, i) => (
-                  <MenuItem key={i} value={x.value} style={getStyles(x.value, selectedMetric, theme)}>
+                  <MenuItem key={i} value={x.value} style={getStyles(x.value, metricsSelected, theme)}>
                       {x.label}
                   </MenuItem>
               ))}
