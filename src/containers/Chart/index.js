@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {throttle} from 'throttle-debounce'
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import {Charts, ChartContainer, ChartRow, YAxis, LineChart, styler, Resizable, Legend} from 'react-timeseries-charts';
 import {useQuery, useSubscription} from 'urql';
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,6 +9,7 @@ import * as selectors from './selectors';
 import {actions} from './reducer';
 import * as utils from './utils';
 import * as config from './config';
+import {formatString} from '../Metrics/utils'
 
 const _buildData = throttle(5000, false,(data, metrics) => utils.buildData(data, metrics));
 
@@ -89,7 +92,7 @@ const ChartsContainer = () => {
           trackerPosition={tracker}
         >
           <ChartRow
-            height={_windowHeight - 200}
+            height={_windowHeight - 300}
             trackerShowTime={true}
             trackerInfoValues={trackerInfo}
             trackerInfoHeight={10 + trackerInfo.length * 16}
@@ -130,6 +133,17 @@ const ChartsContainer = () => {
           </ChartRow>
         </ChartContainer>
       </Resizable>
+        <ul>
+          {_series.map((metricSeries, i) => (
+          <li className='custom-li' key={i}>
+            <Card>
+              <CardContent className='custom-card-content'>
+                <h4 style={{color: utils.assignColor(metricSeries.atLast().get('metric'))}}>{formatString(metricSeries.atLast().get('metric'))}: <span style={{color: 'black'}}>{metricSeries.atLast().get('value')}</span></h4>
+              </CardContent>
+            </Card>
+          </li>
+          ))}
+        </ul>
     </React.Fragment>
   )
 }

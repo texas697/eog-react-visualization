@@ -3,3 +3,17 @@
 .MuiInputBase-root {
     color: rgba(255, 255, 255, 0.87) !important;
 }
+
+.custom-card-content {
+    padding-bottom: 5px !important;
+    padding-top: 5px !important;
+}
+
+.custom-li {
+    display: inline-block !important;
+    width: 200px !important;
+    max-width: 200px !important;
+    list-style-type: none !important;
+    margin-right: 5px !important;
+    text-align: center !important;
+}
